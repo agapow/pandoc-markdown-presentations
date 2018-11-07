@@ -14,6 +14,10 @@ SRC_PREZ=$(PREZ_ROOT).$(SRC_FORMAT)
 OUTPUT=output
 mkdir -p $(OUTPUT)
 
+# template & reference dir
+TEMPLATES=templates
+DEF_TEMPLATE=$(TEMPLATES)/imperial-template.potx
+
 ## Commandline options
 
 # this is how you pass a custom beamer directives including theme
@@ -32,7 +36,7 @@ DST_PPTX=$(OUTPUT)/$(PREZ_ROOT).pptx
 pptx: $(DST_PPTX)
 
 $(DST_PPTX): $(SRC_PREZ)
-	$(PANDOC_EXE) -t pptx -s $(SRC_PREZ) -o $(DST_PPTX) --reference-doc icl-mock.potx
+	$(PANDOC_EXE) -t pptx -s $(SRC_PREZ) -o $(DST_PPTX) --reference-doc $(DEF_TEMPLATE)
 
 
 ## PDF via beamer
