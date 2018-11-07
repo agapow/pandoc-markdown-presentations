@@ -12,7 +12,8 @@ SRC_PREZ=$(PREZ_ROOT).$(SRC_FORMAT)
 
 # output dir
 OUTPUT=output
-mkdir -p $(OUTPUT)
+
+SECONDVAR:=$(shell mkdir -p $(OUTPUT))
 
 # template & reference dir
 TEMPLATES=templates
@@ -64,6 +65,14 @@ notes: $(DST_NOTES)
 
 $(DST_NOTES): $(SRC_PREZ)
 	$(PANDOC_EXE) -t beamer -s $(SRC_PREZ) -o $(DST_NOTES) -M classoption:notes=only
+
+
+DST_HANDOUT=$(OUTPUT)/$(PREZ_ROOT).handout.pdf
+
+handout: $(DST_HANDOUT)
+
+$(DST_HANDOUT): $(SRC_PREZ)
+	$(PANDOC_EXE) -t beamer -s $(SRC_PREZ) -o $(DST_HANDOUT) -V handout  -M classoption:notes=only
 
 
 ## Raw tex via beamer
