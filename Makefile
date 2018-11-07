@@ -5,10 +5,14 @@ PANDOC_EXE=pandoc
 
 ## File paths
 
+# input presentation
 SRC_FORMAT=md
 PREZ_ROOT=presentation
 SRC_PREZ=$(PREZ_ROOT).$(SRC_FORMAT)
+
+# output dir
 OUTPUT=output
+mkdir -p $(OUTPUT)
 
 ## Commandline options
 
@@ -16,13 +20,14 @@ OUTPUT=output
 # don't leave spaces in arg values
 BEAMER_OPTS=-V colortheme:Imperial -M classoption:aspectratio=169
 
+
 ### TARGETS
 
 ## Powerpoint
 # - pandoc says that most standard powerpoint templates should work but in reality only about half do. The others complain "Could not find shape for Powerpoint content"
 # - Saving a potx that works as a pptx or potm in LibreOffice breaks it
 
-DST_PPTX=$OUTPUT/$(PREZ_ROOT).pptx
+DST_PPTX=$(OUTPUT)/$(PREZ_ROOT).pptx
 
 pptx: $(DST_PPTX)
 
@@ -39,7 +44,7 @@ $(DST_PPTX): $(SRC_PREZ)
 # - if you don't explicitly set column width, it splits them evenly and takes all of page
 # - you used to have to hack notes into beamer but pandoc now handles them in the standard way for presentations
 
-DST_PDF=$OUTPUT/$(PREZ_ROOT).slides.pdf
+DST_PDF=$(OUTPUT)/$(PREZ_ROOT).slides.pdf
 
 pdf: $(DST_PDF)
 
@@ -49,7 +54,7 @@ $(DST_PDF): $(SRC_PREZ)
 
 ## PDF notes via beamer
 # - for every page with notes, produces page with notes and inset slide
-DST_NOTES=$OUTPUT/$(PREZ_ROOT).notes.pdf
+DST_NOTES=$(OUTPUT)/$(PREZ_ROOT).notes.pdf
 
 notes: $(DST_NOTES)
 
@@ -59,7 +64,7 @@ $(DST_NOTES): $(SRC_PREZ)
 
 ## Raw tex via beamer
 # - mainly for debugging
-DST_TEX=$OUTPUT/$(PREZ_ROOT).tex
+DST_TEX=$(OUTPUT)/$(PREZ_ROOT).tex
 
 tex: $(DST_TEX)
 
@@ -70,7 +75,7 @@ $(DST_TEX): $(SRC_PREZ)
 ## Admin
 
 clean:
-	rm -f $OUTPUT/*
+	rm -f $(OUTPUT)/*
 
 
 ### END ###
